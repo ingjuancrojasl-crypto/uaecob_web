@@ -1,91 +1,101 @@
-# Incidentes UAECOB Bogotá 2020 — Streamlit App
+# 🚒 UAECOB Bogotá — Dashboard de Incidentes 2020 (Streamlit)
 
-## Descripción
-
-Aplicación web interactiva desarrollada con **Streamlit** y **Plotly** que visualiza los incidentes atendidos por la Unidad Administrativa Especial Cuerpo Oficial de Bomberos de Bogotá (UAECOB) entre enero y agosto de 2020.
-
-Proyecto desarrollado para el curso **Herramientas y Visualización de Datos** — Fundación Universitaria Los Libertadores.
+Dashboard interactivo de visualización de datos de incidentes atendidos por el Cuerpo Oficial de Bomberos de Bogotá D.C. durante el periodo enero–agosto de 2020.
 
 ## Dataset
 
-- **Fuente**: Datos Abiertos del Gobierno Colombiano
-- **URL**: https://www.datos.gov.co/
-- **Nombre**: Incidentes atendidos por UAECOB — Corte 31 agosto 2020
-- **Descripción**: 20.228 registros de incidentes atendidos por el Cuerpo de Bomberos de Bogotá, con variables de fecha, localidad, estrato, tipo de servicio, causa, tiempo de respuesta y víctimas.
-- **Variables**: 42 columnas — fechas, localización geográfica (barrio, UPZ, localidad, estrato), tipo de servicio, causa del incidente, y conteos de personas expuestas/afectadas/rescatadas/heridas.
+- **Fuente:** Unidad Administrativa Especial Cuerpo Oficial de Bomberos Bogotá (UAECOB)
+- **URL:** https://datosabiertos.bogota.gov.co/dataset/incidente-atendido-por-bomberos
+- **Descripción:** Registro de 20.228 incidentes atendidos por bomberos en Bogotá D.C. Incluye localidad, hora, tipo de servicio, estación, víctimas (heridos, rescatados) y tiempo de respuesta.
+- **Periodo:** Enero – Agosto 2020 (junio sin registros en el dataset fuente)
+- **Variables:** 41 columnas — fecha, localidad, estrato, servicio, víctimas, tiempos, coordenadas
 
 ## Hallazgos Principales
 
-1. **Prevenciones y activaciones dominan**: Más del 30% de los servicios son prevenciones o activaciones de alarmas — los incendios reales representan menos del 4% del total, reflejando la labor preventiva del cuerpo de bomberos.
-2. **Tiempo de respuesta mediano: 9 minutos**: La distribución está sesgada a la derecha; la mayoría de incidentes se atienden en menos de 15 minutos, pero casos complejos elevan el promedio a ~11 min.
-3. **Estratos 2 y 3 concentran la mayoría de incidentes**: Coherente con su mayor población en Bogotá. Los incidentes con animales y quemas prohibidas son relativamente más frecuentes en estratos bajos.
-4. **Caída de incidentes en marzo–abril por COVID-19**: La cuarentena obligatoria redujo significativamente la actividad registrada, especialmente en tipos relacionados con tráfico y espacios públicos.
-5. **Suba y Kennedy lideran geográficamente**: Estas dos localidades concentran ~20% de todos los incidentes. El perfil de riesgo varía por zona: más MATPEL en zonas industriales, más quemas y animales en la periferia.
+1. **Impacto del COVID-19:** Los incidentes cayeron ~23% entre febrero (pico: 3.567) y abril (valle: 2.738), coincidiendo con la cuarentena obligatoria del 25 de marzo de 2020.
+2. **Patrón bimodal horario:** La demanda se concentra en dos franjas críticas: 8h–11h y 14h–17h, con un pico máximo a las 9h. Las madrugadas (2h–5h) son el periodo de menor actividad.
+3. **Carga territorial desigual:** Suba, Kennedy y Engativá concentran más del 35% de todos los incidentes, mientras Sumapaz registra la mínima actividad por su condición rural.
+4. **40% de servicios no son emergencias activas:** Prevenciones (16%), falsas alarmas (11%) y activaciones consumen recursos significativos sin corresponder a emergencias reales.
+5. **Tiempo de respuesta satisfactorio pero desigual:** La mediana general es 9 min; sin embargo, localidades periféricas del sur (Ciudad Bolívar, Rafael Uribe) superan los 11 min frente a 6–7 min de localidades centrales.
 
 ## Visualizaciones Implementadas
 
-1. **Gráfico de barras horizontales** — Comparación de tipos de incidente (Viz 1): muestra las categorías de servicio ordenadas por frecuencia, con selector interactivo de cuántos tipos mostrar.
-2. **Histograma con línea de mediana** — Distribución del tiempo de respuesta (Viz 2): permite filtrar por tipo de incidente para comparar la distribución según la complejidad del servicio.
-3. **Mapa de calor (heatmap)** — Relación estrato × tipo de incidente (Viz 3): matriz de color que revela qué tipos de incidente son más frecuentes en cada estrato socioeconómico.
-4. **Línea de tiempo** — Evolución mensual de incidentes (Viz 4): muestra el efecto de la cuarentena COVID-19 en la cantidad de servicios atendidos mes a mes.
-5. **Treemap** — Composición geográfica por localidad (Viz 5): desglose jerárquico de incidentes por localidad y tipo/causa/estrato, con controles interactivos.
+| # | Tipo | Descripción |
+|---|------|-------------|
+| 1 | Barras verticales + paleta secuencial | Incidentes por mes — Evolución temporal |
+| 2 | Línea + área rellena | Distribución horaria de incidentes (0–23h) |
+| 3 | Histograma + línea de mediana | Distribución del tiempo de respuesta |
+| 4 | Barras horizontales + paleta secuencial | Top 10 tipos de servicio (comparación de categorías) |
+| 5 | Barras horizontales + gráfico de dona | Incidentes / heridos / rescatados por localidad (composición) |
+
+Cada visualización aplica:
+- **Unidad 1:** Tipo de gráfico correcto según el dato, principios de Gestalt, data storytelling
+- **Unidad 2:** Paletas secuenciales para datos continuos, cualitativas para categorías, accesibilidad
+- **Unidad 3:** Data-ink ratio alto, jerarquía visual, títulos descriptivos con insights, fuente en cada gráfica
 
 ## Tecnologías Utilizadas
 
-- **Framework**: Streamlit 1.32+
-- **Lenguaje**: Python 3.10+
-- **Bibliotecas principales**:
-  - `plotly` — visualizaciones interactivas
-  - `pandas` — manipulación y análisis de datos
+- **Framework:** Streamlit ≥ 1.32
+- **Lenguaje:** Python 3.10+
+- **Visualización:** Plotly Express / Plotly Graph Objects
+- **Análisis:** Pandas
 
 ## Instalación y Ejecución Local
 
 ### Requisitos Previos
-
 - Python 3.10 o superior
 - pip
 
 ### Instrucciones
 
 ```bash
-# Clonar repositorio
+# 1. Clonar el repositorio
 git clone https://github.com/TU_USUARIO/uaecob-streamlit.git
 cd uaecob-streamlit
 
-# Instalar dependencias
+# 2. Crear entorno virtual (recomendado)
+python -m venv venv
+source venv/bin/activate        # Linux/Mac
+venv\Scripts\activate           # Windows
+
+# 3. Instalar dependencias
 pip install -r requirements.txt
 
-# Ejecutar aplicación
+# 4. Colocar el dataset en la raíz del proyecto
+# El archivo debe llamarse:
+# incidentes-atendidos-por-uaecob-corte-31-agosto-2020.csv
+
+# 5. Ejecutar la aplicación
 streamlit run app.py
 ```
 
-La aplicación se abrirá en `http://localhost:8501`
+La aplicación abrirá automáticamente en `http://localhost:8501`
 
-## Despliegue
+## Despliegue en Streamlit Community Cloud
 
-URL en producción: *(agregar después del deploy en Streamlit Community Cloud)*
-
-### Cómo desplegar en Streamlit Cloud
-
-1. Subir este repositorio a GitHub (asegurarse de incluir el CSV)
+1. Subir el repositorio a GitHub (con `app.py`, `requirements.txt` y el CSV)
 2. Ir a https://share.streamlit.io
 3. Conectar la cuenta de GitHub
-4. Seleccionar el repositorio y el archivo `app.py` como punto de entrada
-5. Hacer clic en "Deploy"
+4. Seleccionar el repositorio y el archivo `app.py`
+5. Hacer clic en **Deploy**
+
+**URL en producción:** *(completar después del despliegue)*
 
 ## Estructura del Repositorio
 
 ```
 uaecob-streamlit/
-├── app.py                                          # Aplicación principal
-├── requirements.txt                                # Dependencias Python
-├── incidentes_uaecob_2020.csv                      # Dataset
-└── README.md                                       # Este archivo
+├── app.py                                                  # Aplicación principal
+├── requirements.txt                                        # Dependencias
+├── incidentes-atendidos-por-uaecob-corte-31-agosto-2020.csv  # Dataset
+└── README.md                                               # Este archivo
 ```
 
 ## Autores
 
-- Nombre Apellido 1
-- Nombre Apellido 2
+- Juan Carlos Rojas Lizarazo
+- Brayan Andres Sierra Zambrano
 
-*Fundación Universitaria Los Libertadores — Herramientas y Visualización de Datos*
+**Curso:** Herramientas y Visualización de Datos  
+**Institución:** Fundación Universitaria Los Libertadores  
+**Año:** 2026
